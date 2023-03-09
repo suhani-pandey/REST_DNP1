@@ -59,7 +59,10 @@ public class FileContext
     //DataContainer is serialized  to JSON then written to the file then field is cleared.
     public void SaveChanges()
     {
-        string serialized = JsonSerializer.Serialize(DataContainer);
+        string serialized = JsonSerializer.Serialize(DataContainer, new JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
         File.WriteAllText(filePath, serialized);
         DataContainer = null;
     }

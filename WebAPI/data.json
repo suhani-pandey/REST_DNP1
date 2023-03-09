@@ -1,0 +1,46 @@
+{
+  "Users": [
+    {
+      "Id": 1,
+      "Username": "Suhani",
+      "Type": null
+    },
+    {
+      "Id": 2,
+      "Username": "troelsss",
+      "Type": null
+    },
+    {
+      "Id": 3,
+      "Username": "someone",
+      "Type": null
+    },
+    {
+      "Id": 4,
+      "Username": "rajip",
+      "Type": null
+    },
+    {
+      "Id": 5,
+      "Username": "ram",
+      "Type": null
+    },
+    {
+      "Id": 6,
+      "Username": "Shyam",
+      "Type": null
+    }
+  ],
+  "Todos": [
+    {
+      "Id": 1,
+      "Owner": {
+        "Id": 1,
+        "Username": "Suhani",
+        "Type": null
+      },
+      "Title": "Suhani",
+      "isCompleted": true
+    }
+  ]
+}
