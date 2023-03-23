@@ -1,7 +1,10 @@
 ﻿@page "/ViewTodos"
 @using global::Shared
+@using global::Shared.DTOs
 @using HTTPClients.ClientInterfaces
 @inject ITodoService todoService;
+@inject NavigationManager navMgr
+@using UIComponent
 
 <h3>Todos</h3>
 <div class="filter-bar">
@@ -54,6 +57,7 @@ else
             <th>Owner ID</th>
             <th>Title</th>
             <th>Completed?</th>
+            <th>Edit</th>
         </tr>
         </thead>
         <tbody>
@@ -63,7 +67,12 @@ else
                 <td>@item.Id</td>
                 <td>@item.Owner.Username</td>
                 <td>@item.Title</td>
-                <td>@item.IsCompleted</td>
+                <td>
+                    <FancyCheckBox IsCompleted="@item.IsCompleted" OnChange="@((status) =>CompleteTodo(item, status))"/>
+                </td>
+                <td>
+                    <img src="icons/icon.gif" class="funnel" @onclick="@(() => navMgr.NavigateTo($"/EditTodo/{item.Id}"))"/>
+                                </td>
             </tr>
         }
         </tbody>
@@ -97,6 +106,23 @@ else
             }
             
             todos = await todoService.GetAsync(usernameFilter, userIdFilter, completedFilterValue, titleContainerFilter);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+    private async Task CompleteTodo(Todo item, bool status)
+    {
+        TodoUpdateDto dto = new(item.Id)
+        {
+            IsCompleted = status
+        };
+        try
+        {
+            await todoService.UpdateAsync(dto);//pass dto to TodoHttpService
         }
         catch (Exception e)
         {

@@ -1,0 +1,95 @@
+﻿@page "/EditTodo/{id:int}"
+@using global::Shared.DTOs
+@using global::Shared
+@using HTTPClients.ClientInterfaces
+@inject IUserService UserService
+@inject ITodoService TodoService
+@inject NavigationManager navMgr
+<h3>EditTodo</h3>
+
+<div class="card">
+    @if (users == null)
+    {
+        <label>Loading users...</label>
+    }
+    else if (!users.Any())
+    {
+        <label>No users, you cannot create a Todo´´</label>
+    }
+    else if (dto == null)
+    {
+        <label>Loading Todo data..</label>
+    }
+    else
+    {
+        <h3>Update Todo</h3>
+        <div class="form-group field">
+            <label>Title:</label>
+            <input type="text" @bind="dto.Title"/>
+        </div>
+        <div class="form-group field">
+            <label>Assignee:</label>
+            <select @bind="dto.OwnerId">
+                <option>Choose</option>
+                @foreach (User user in users)
+                {
+                    <option value="@user.Id">@user.Username </option>
+                }
+            </select>
+        </div>
+        <div class="button-row">
+            <button @onclick="UpdateAsync" class="acceptbtn">Update</button>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(msg))
+    {
+        <label style="color: red">@msg</label>
+    }
+</div>
+
+@code {
+        
+    [Parameter]
+    public int  Id { get; set; }
+
+    private TodoUpdateDto dto = null;
+    private string msg = "";
+    private IEnumerable<User>? users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            users = await UserService.GetUsers();
+            TodoBasicDto todoData = await TodoService.GetByIdAsync(Id);
+            User currentlyAssigned = users.First(user => user.Username.Equals(todoData.OwnerName));
+
+            dto = new(Id)
+            {
+                Title = todoData.Title,
+                OwnerId = currentlyAssigned.Id
+            };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+    private async Task UpdateAsync()
+    {
+        try
+        {
+            await TodoService.UpdateAsync(dto);
+            navMgr.NavigateTo("/ViewTodos");
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+}

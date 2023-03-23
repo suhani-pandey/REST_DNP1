@@ -78,8 +78,37 @@ public class TodoHttpClient:ITodoService
         return query;
     }
 
-   
+    //make the update request
+    //must make the patch request snd check the response for error code
+    public async Task UpdateAsync(TodoUpdateDto dto)
+    {
+        string dtoAsJson = JsonSerializer.Serialize(dto);//first serialized to JSON
+        StringContent body = new StringContent(dtoAsJson, Encoding.UTF8, "application/json");//create stringcontent to hold the data , we are sending JSON so we pass application/json
+        
 
+        HttpResponseMessage response = await client.PatchAsync("/todo", body);//make patch request to the client
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
+    }
 
+    public async Task<TodoBasicDto> GetByIdAsync(int id)
+    {
+        HttpResponseMessage response = await client.GetAsync($"/todo{id}");
+        string content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
 
+        TodoBasicDto todo = JsonSerializer.Deserialize<TodoBasicDto>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return todo;
+    }
+
+    
 }
