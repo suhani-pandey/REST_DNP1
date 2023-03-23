@@ -1,0 +1,16 @@
+﻿<h3>FancyCheckBox</h3>
+
+@code {
+    
+    //this is for the initial value component
+    
+    //why parameter
+    [Parameter]
+    public bool IsCompleted { get; set; }
+    
+    //delegate to notify the change
+    [Parameter]
+    public EventCallback<bool> OnChange { get; set; }
+    
+    
+}

@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileData", "FileData\FileData.csproj", "{521B780E-1E84-4AED-B392-D87D560A1895}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTPClients", "HTTPClients\HTTPClients.csproj", "{B09C0B2A-9121-49A2-B0B5-80E824AE2FDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWASM", "BlazorWASM\BlazorWASM.csproj", "{77412E3E-B861-42D9-BD56-AE2D965C8BC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{521B780E-1E84-4AED-B392-D87D560A1895}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{521B780E-1E84-4AED-B392-D87D560A1895}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{521B780E-1E84-4AED-B392-D87D560A1895}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B09C0B2A-9121-49A2-B0B5-80E824AE2FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B09C0B2A-9121-49A2-B0B5-80E824AE2FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B09C0B2A-9121-49A2-B0B5-80E824AE2FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B09C0B2A-9121-49A2-B0B5-80E824AE2FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77412E3E-B861-42D9-BD56-AE2D965C8BC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77412E3E-B861-42D9-BD56-AE2D965C8BC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77412E3E-B861-42D9-BD56-AE2D965C8BC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77412E3E-B861-42D9-BD56-AE2D965C8BC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

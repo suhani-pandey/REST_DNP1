@@ -19,7 +19,13 @@ builder.Services.AddScoped<IUserLogic,UserLogic>();
 builder.Services.AddScoped<ITodoDao, TodoFileDao>();
 builder.Services.AddScoped<ITodoLogic, TodoLogic>();
 
+
 var app = builder.Build();
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

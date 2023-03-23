@@ -47,7 +47,7 @@ public class TodoFileDao:ITodoDao
 
         if (searchParameters.CompletedStatus != null)
         {
-            result = result.Where(t => t.isCompleted == searchParameters.CompletedStatus);
+            result = result.Where(t => t.IsCompleted == searchParameters.CompletedStatus);
         }
 
         if (!string.IsNullOrEmpty(searchParameters.TitleContains))

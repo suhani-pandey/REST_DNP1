@@ -61,18 +61,18 @@ public class TodoLogic:ITodoLogic
             }
         }
 
-        if (todo.IsCompleted != null && existing.isCompleted && !(bool)todo.IsCompleted)
+        if (todo.IsCompleted != null && existing.IsCompleted && !(bool)todo.IsCompleted)
         {
             throw new Exception("Cannot un-complete a completed Todo");
         }
 
         User userToUse = user ?? existing.Owner;
         string titleToUse = todo.Title ?? existing.Title;
-        bool completedToUse = todo.IsCompleted ?? existing.isCompleted;
+        bool completedToUse = todo.IsCompleted ?? existing.IsCompleted;
         
         Todo updated = new (userToUse, titleToUse)
         {
-            isCompleted = completedToUse,
+            IsCompleted = completedToUse,
             Id = existing.Id,
         };
 
@@ -94,7 +94,7 @@ public class TodoLogic:ITodoLogic
         {
             throw new Exception($"Todo with {id} was not found");
         }
-        if (existing.isCompleted==false)
+        if (existing.IsCompleted==false)
         {
             throw new Exception($"cannot delete it");
             

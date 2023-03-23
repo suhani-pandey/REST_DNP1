@@ -1,0 +1,59 @@
+﻿@page "/CreateUser"//page directive
+@using global::Shared.DTOs
+@using HTTPClients.ClientInterfaces
+@inject IUserService userService;
+
+<h3>CreateUser</h3>
+<div class="card">
+    <h3>Create User</h3>
+    <div class="form-group field">
+        <label>User name:</label>
+        @*first-value of text field should be stored in field variable username : binding is two way
+                oninput because the button should be disable if there is nothing in the field.
+                
+        *@
+        <input type="text" @bind="username" @bind:event="oninput"/>
+        
+        @*
+        check if there is anything in the resultMsg field, and if so, 
+        we display a <label> with whatever error message should be shown. 
+        If the resultMsg is empty, the HTML inside the if-statement is not rendered.
+*@
+        @if (!string.IsNullOrEmpty(resultMsg))
+        {
+            <label style="color: @color">@resultMsg</label>
+        }
+    </div>
+    <div class="button-row">
+        <button @onclick="Create" disabled="@(string.IsNullOrEmpty(username))" class="acceptbtn">Create</button>
+    </div>
+</div>
+
+@*
+This is like the view model part
+*@
+@code {
+    private string username = "";
+    private string resultMsg = "";
+    private string color = "";
+    
+    private async Task Create()
+    {
+         resultMsg = "";//to hold any message we display to the user 
+
+        try
+        {
+           
+            await userService.Create(new UserCreationDto(username));
+            username = "";
+            resultMsg = "User successfully created";
+            color = "green";
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            resultMsg = e.Message;
+            color = "red";
+        }
+    }
+}

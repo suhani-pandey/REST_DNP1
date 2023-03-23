@@ -64,7 +64,7 @@ public class TodoController:ControllerBase
         }
     }
 
-    [HttpDelete]
+    [HttpDelete ("{id:int}")]
     public async Task<ActionResult> DeleteAsync([FromRoute] int id)
     {
         try
