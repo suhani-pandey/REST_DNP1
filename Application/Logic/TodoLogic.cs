@@ -101,4 +101,15 @@ public class TodoLogic:ITodoLogic
         }
         await todoDao.DeleteAsync(id);
     }
+
+    public async Task<Todo> GetByIdAsync(int todoId)
+    {
+     Todo? todoById=  await todoDao.GetByIdAsync(todoId);
+     if (todoById == null)
+     {
+         throw new Exception($"Todo with {todoId} was not found");
+     }
+
+     return todoById;
+    }
 }

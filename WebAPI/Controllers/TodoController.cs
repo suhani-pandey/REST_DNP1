@@ -48,6 +48,25 @@ public class TodoController:ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    
+    [HttpGet]
+    [Route("{todoId:int}")]
+    public async Task<ActionResult<Todo>> GetTodoByIdAsync([FromRoute] int todoId)
+    {
+        try
+        {
+            Todo dto = await todoLogic.GetByIdAsync(todoId);
+            return Ok(dto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    
 
     [HttpPatch]
     public async Task<ActionResult> UpdateAsync([FromBody] TodoUpdateDto updateDto)

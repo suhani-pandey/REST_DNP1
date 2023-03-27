@@ -4,8 +4,8 @@
 @using HTTPClients.ClientInterfaces
 @inject IUserService UserService
 @inject ITodoService TodoService
-@inject NavigationManager navMgr
-<h3>EditTodo</h3>
+@inject NavigationManager NavMgr
+
 
 <div class="card">
     @if (users == null)
@@ -52,7 +52,7 @@
     [Parameter]
     public int  Id { get; set; }
 
-    private TodoUpdateDto dto = null;
+    private TodoUpdateDto? dto = null;
     private string msg = "";
     private IEnumerable<User>? users;
 
@@ -83,7 +83,7 @@
         try
         {
             await TodoService.UpdateAsync(dto);
-            navMgr.NavigateTo("/ViewTodos");
+            NavMgr.NavigateTo("/ViewTodos");
             
         }
         catch (Exception e)

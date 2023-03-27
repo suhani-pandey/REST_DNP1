@@ -96,19 +96,45 @@ public class TodoHttpClient:ITodoService
 
     public async Task<TodoBasicDto> GetByIdAsync(int id)
     {
-        HttpResponseMessage response = await client.GetAsync($"/todo{id}");
+        HttpResponseMessage response = await client.GetAsync($"/todo/{id}");
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(content);
         }
-
-        TodoBasicDto todo = JsonSerializer.Deserialize<TodoBasicDto>(content, new JsonSerializerOptions
+    
+        Todo todo = JsonSerializer.Deserialize<Todo>(content, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
-        return todo;
+        return new TodoBasicDto(todo.Id, todo.Owner.Username, todo.Title, todo.IsCompleted);
     }
 
-    
+    public async Task DeleteAsync(int id)
+    {
+        HttpResponseMessage response = await client.DeleteAsync($"Todo/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            throw new Exception(content);
+        }
+    }
+
+    // public async Task<TodoBasicDto> GetByIdAsync(int id)
+    // {
+    //     HttpResponseMessage response = await client.GetAsync($"/todos/{id}");
+    //     string content = await response.Content.ReadAsStringAsync();
+    //     if (!response.IsSuccessStatusCode)
+    //     {
+    //         throw new Exception(content);
+    //     }
+    //
+    //     TodoBasicDto todo = JsonSerializer.Deserialize<TodoBasicDto>(content, 
+    //         new JsonSerializerOptions
+    //         {
+    //             PropertyNameCaseInsensitive = true
+    //         }
+    //     )!;
+    //     return todo;
+    // }
 }

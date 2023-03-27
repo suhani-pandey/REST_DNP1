@@ -58,6 +58,7 @@ else
             <th>Title</th>
             <th>Completed?</th>
             <th>Edit</th>
+            <th>Delete?</th>
         </tr>
         </thead>
         <tbody>
@@ -72,7 +73,13 @@ else
                 </td>
                 <td>
                     <img src="icons/icon.gif" class="funnel" @onclick="@(() => navMgr.NavigateTo($"/EditTodo/{item.Id}"))"/>
-                                </td>
+                </td>
+                <td>
+                    <label @onclick="@(() => RemoveTodo(item.Id))" style="cursor:pointer; color: red; font-weight: bold">
+                        &#x2717;
+                    </label>
+                </td>
+                
             </tr>
         }
         </tbody>
@@ -123,6 +130,25 @@ else
         try
         {
             await todoService.UpdateAsync(dto);//pass dto to TodoHttpService
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+    private async Task RemoveTodo(int todoId)
+    {
+        msg = "";
+        try
+        {
+            await todoService.DeleteAsync(todoId);@* makes call to todoService*@
+
+            var list = new List<Todo>(todos!);
+            list.RemoveAll(todo => todo.Id == todoId);
+            todos = list.AsEnumerable();
+
         }
         catch (Exception e)
         {
