@@ -8,17 +8,8 @@
     <h3>Create User</h3>
     <div class="form-group field">
         <label>User name:</label>
-        @*first-value of text field should be stored in field variable username : binding is two way
-                oninput because the button should be disable if there is nothing in the field.
-                
-        *@
-        <input type="text" @bind="username" @bind:event="oninput"/>
         
-        @*
-        check if there is anything in the resultMsg field, and if so, 
-        we display a <label> with whatever error message should be shown. 
-        If the resultMsg is empty, the HTML inside the if-statement is not rendered.
-*@
+        <input type="text" @bind="username" @bind:event="oninput"/>
         @if (!string.IsNullOrEmpty(resultMsg))
         {
             <label style="color: @color">@resultMsg</label>
